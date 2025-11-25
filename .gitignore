@@ -1,0 +1,64 @@
+examples/
+docs/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+.python-version
+
+# Environment variable files (keep documented templates)
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.sample
+
+# Test / coverage / tooling caches
+.coverage
+.coverage.*
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.hypothesis/
+.nox/
+.tox/
+htmlcov/
+.cache/
+*.cover
+*.py,cover
+
+# IDE / editor metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs & OS cruft
+*.log
+.DS_Store
+Thumbs.db
+
+# Miscellaneous
+*.bak
+*.tmp
+*.orig
