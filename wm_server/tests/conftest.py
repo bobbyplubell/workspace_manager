@@ -32,6 +32,10 @@ _TESTS_DIR = _THIS_FILE.parent                  # .../workspace_manager/wm_serve
 _PROJECT_DIR = _TESTS_DIR.parent.parent         # .../workspace_manager
 _REPO_ROOT = _PROJECT_DIR.parent                # repo root
 
+_WM_SERVER_SRC = _PROJECT_DIR / "wm_server" / "src"
+if _WM_SERVER_SRC.exists():
+    _add_sys_path(_WM_SERVER_SRC)
+
 _add_sys_path(_PROJECT_DIR)
 _add_sys_path(_REPO_ROOT)
 

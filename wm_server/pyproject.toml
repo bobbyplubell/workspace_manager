@@ -33,4 +33,11 @@ port = 8081
 reload = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["wm_server"]
+packages = ["src/wm_server"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src/wm_server",
+  "/pyproject.toml",
+  "/requirements.txt",
+]
