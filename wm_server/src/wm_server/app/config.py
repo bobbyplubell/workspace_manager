@@ -159,7 +159,18 @@ def _load_dotenv_into_env(dotenv_path: Optional[Path] = None, allowed_keys: Opti
     - Ignores malformed lines
     """
     try:
-        path = Path(dotenv_path) if dotenv_path else (Path(__file__).resolve().parents[1] / ".env")
+        if dotenv_path:
+            path = Path(dotenv_path)
+        else:
+            path = None
+            here = Path(__file__).resolve()
+            for ancestor in list(here.parents)[:5]:
+                candidate = ancestor / ".env"
+                if candidate.is_file():
+                    path = candidate
+                    break
+            if path is None:
+                return
         if not path.is_file():
             return
         allow = set(allowed_keys or _ALLOWED_DOTENV_KEYS)

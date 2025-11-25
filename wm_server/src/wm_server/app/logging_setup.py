@@ -54,6 +54,31 @@ _DEFAULT_DATEFMT = "%Y-%m-%d %H:%M:%S"
 _ATTACHED_LOG_PATHS: set[str] = set()
 
 
+def _detect_package_root() -> Optional[Path]:
+    """
+    Locate the wm_server package root regardless of editable vs. installed layout.
+    """
+    try:
+        module_path = Path(__file__).resolve()
+    except Exception:
+        return None
+    for parent in module_path.parents:
+        if (parent / "__init__.py").is_file() and (parent / "app").is_dir():
+            return parent
+    return None
+
+
+def _detect_repo_root(pkg_root: Path) -> Optional[Path]:
+    """
+    Best-effort detection of the workspace_manager repo root when running from source.
+    """
+    for ancestor in pkg_root.parents:
+        candidate = ancestor / "wm_server" / "pyproject.toml"
+        if candidate.is_file():
+            return ancestor
+    return None
+
+
 def _coerce_level(level: Optional[Union[int, str]], default: int = logging.INFO) -> int:
     if isinstance(level, int):
         return level
@@ -89,14 +114,12 @@ def _candidate_paths(
         candidates.append(Path(env_dir).expanduser() / file_name)
 
     # 3) Project directories (package root and repo root)
-    try:
-        pkg_root = Path(__file__).resolve().parents[1]  # wm_server/
+    pkg_root = _detect_package_root()
+    if pkg_root:
         candidates.append(pkg_root / file_name)
-        repo_root = pkg_root.parents[1]  # workspace_manager/
-        candidates.append(repo_root / file_name)
-    except Exception:
-        # Best-effort; skip if path resolution fails in zipped/zipapp contexts
-        pass
+        repo_root = _detect_repo_root(pkg_root)
+        if repo_root:
+            candidates.append(repo_root / file_name)
 
     # 4) User home: ~/.workspace_manager/logs/
     candidates.append(Path.home() / ".workspace_manager" / "logs" / file_name)
