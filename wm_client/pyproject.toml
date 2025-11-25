@@ -1,6 +1,7 @@
 [build-system]
-requires = ["hatchling>=1.21"]
-build-backend = "hatchling.build"
+requires = []
+build-backend = "wm_build_backend"
+backend-path = ["."]
 
 [project]
 name = "workspace-manager-client"
@@ -21,16 +22,6 @@ testing = [
   "pytest-timeout>=2.2",
 ]
 
-[tool.hatch.build.targets.wheel]
-# Package code is expected under: wm_client/src/wm_client
-packages = ["src/wm_client"]
-
-[tool.hatch.build.targets.sdist]
-include = [
-  "/src/wm_client",
-  "/pyproject.toml",
-  "/README.md",
-]
 
 [tool.ruff]
 line-length = 120

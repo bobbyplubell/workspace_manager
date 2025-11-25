@@ -1,6 +1,7 @@
 [build-system]
-requires = ["hatchling>=1.21"]
-build-backend = "hatchling.build"
+requires = []
+build-backend = "wm_build_backend"
+backend-path = ["."]
 
 [project]
 name = "workspace-manager"
@@ -21,7 +22,7 @@ dependencies = [
 # Usage (from workspace_manager, with ./venv active):
 #   workspace-manager wm_server.app.main:app --reload --host 127.0.0.1 --port 8081
 [project.scripts]
-workspace-manager = "uvicorn.__main__:main"
+workspace-manager = "wm_server.cli:main"
 
 # Optional convenience defaults for local dev (uvicorn does not consume this automatically).
 # You can still run:
@@ -31,13 +32,3 @@ app = "wm_server.app.main:app"
 host = "127.0.0.1"
 port = 8081
 reload = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/wm_server"]
-
-[tool.hatch.build.targets.sdist]
-include = [
-  "/src/wm_server",
-  "/pyproject.toml",
-  "/requirements.txt",
-]
