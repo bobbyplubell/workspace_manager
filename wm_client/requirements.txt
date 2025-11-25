@@ -1,0 +1,4 @@
+# Runtime dependencies for WorkspaceManager Python SDK (wm_client)
+# Minimal runtime-only; dev/test dependencies are intentionally excluded.
+
+requests>=2.31.0

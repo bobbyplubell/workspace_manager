@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "workspace-manager"
+version = "0.1.0"
+description = "FastAPI service for managing on-demand containerized application workspaces."
+requires-python = ">=3.10"
+authors = [{ name = "Splunky" }]
+dependencies = [
+  "fastapi>=0.111.0",
+  "uvicorn[standard]>=0.29.0",
+  "pydantic>=2.7.0",
+  "docker>=7.0.0",
+  "python-multipart>=0.0.9",
+  "wsproto>=1.2.0",
+]
+
+# Console entry to run the uvicorn CLI inside your venv.
+# Usage (from workspace_manager, with ./venv active):
+#   workspace-manager wm_server.app.main:app --reload --host 127.0.0.1 --port 8081
+[project.scripts]
+workspace-manager = "uvicorn.__main__:main"
+
+# Optional convenience defaults for local dev (uvicorn does not consume this automatically).
+# You can still run:
+#   workspace-manager wm_server.app.main:app --reload --host 127.0.0.1 --port 8081
+[tool.uvicorn]
+app = "wm_server.app.main:app"
+host = "127.0.0.1"
+port = 8081
+reload = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["wm_server"]
